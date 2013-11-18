@@ -1,9 +1,18 @@
-<div class="hero-unit">
-  <h1>'Allo, 'Allo!</h1>
-  <p>You now have</p>
-  <ul>
-      <li ng-repeat="thing in awesomeThings">{{thing}}</li>
-  </ul>
-  <p>installed.</p>
-  <h3>Enjoy coding! - Yeoman</h3>
+<div ng-controller="MainCtrl" value="someValue">
+    {{name}}
+    <hr>
+    
+    <button class="btn" ng-click="save()">save</button>
+    <button class="btn" ng-click="saveTitle()">save title</button>
+    <button class="btn" ng-click="ddd()">get resource</button>
+    <button class="btn" ng-click="appendCounter()">add counter</button>
+    <button class="btn" ng-click="removeCounter()">remove counter</button>
+
+    <div class="widget-directive" instance-name="MyWidget"></div>
+
+    <ul>
+        <li ng-repeat="item in list">
+            <a href="#">{{name}} - {{item.name}}</a>
+        </li>
+    </ul>
 </div>

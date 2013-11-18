@@ -29,18 +29,17 @@
     <!-- Add your site or application content here -->
     <div class="container" ng-view=""></div>
 
-    <div my-directive></div>
-
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
     <script>
-      var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
-      (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
-      g.src='//www.google-analytics.com/ga.js';
-      s.parentNode.insertBefore(g,s)}(document,'script'));
+      // var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
+      // (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+      // g.src='//www.google-analytics.com/ga.js';
+      // s.parentNode.insertBefore(g,s)}(document,'script'));
     </script>
 
     <script src="bower_components/jquery/jquery.js"></script>
-    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-latest/build/angular.js"></script>
+    <script src="bower_components/lodash/dist/lodash.js"></script>
 
         <!-- build:js scripts/plugins.js -->
         <script src="bower_components/bootstrap-sass/js/bootstrap-affix.js"></script>
@@ -66,9 +65,20 @@
 
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
         <script src="scripts/app.js"></script>
-        <script src="scripts/controllers/main.js"></script>
+        <script src="scripts/factories/WidgetFactory.js"></script>
+        <script src="scripts/factories/Events.js"></script>
+        <script src="scripts/factories/Extend.js"></script>
+        <script src="scripts/factories/WidgetSDK.js"></script>
+        <script src="scripts/factories/attributable.js"></script>
+        <script src="scripts/factories/widget.js"></script>
+        <script src="scripts/factories/Document.js"></script>
+        <script src="scripts/factories/MyWidget.js"></script>
+        <script src="scripts/controllers/widgetDirectiveCtrl.js"></script>
+        <script src="scripts/directives/widgetDirective.js"></script>
+        <script src="scripts/directives/counter.js"></script>
         <script src="scripts/controllers/myDirective.js"></script>
-        <script src="scripts/directives/myDirective.js"></script>
+        <script src="scripts/controllers/myButton.js"></script>
+        <script src="scripts/controllers/main.js"></script>
         <!-- endbuild -->
 </body>
 </html>

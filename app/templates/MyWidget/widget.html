@@ -1,0 +1,25 @@
+<div>
+    <h1>Widget instance {{name}}</h1>
+    {{message}}
+    <br>
+    {{widgetInstance.message}}
+
+    <div class="form-inline">
+        <div class="group-controls">
+            <label for="">Title:</label><input type="text" ng-model="attrs.title">
+            <label for="">Name:</label><input type="text" ng-model="attrs.name">
+            <label for="">Age:</label><input type="text" ng-model="attrs.age">
+        </div>
+        <button ng-click="MyWidget.foo()" class="btn btn-primary">Click</button>
+    </div>
+    <div class="form-inline">
+        <button ng-click="MyWidget.disable()" class="btn btn-primary">Disable</button>
+        <button ng-click="MyWidget.enable()" class="btn btn-primary">Enable</button>
+    </div>
+    <hr>
+    <div class="form-inline">
+        <button ng-click="MyWidget.addCache()" class="btn btn-primary">add to cache</button>
+        <button ng-click="MyWidget.readCache()" class="btn btn-primary">read from cache</button>
+        <button ng-click="MyWidget.deleteCache()" class="btn btn-primary">delete from cache</button>
+    </div>
+</div>

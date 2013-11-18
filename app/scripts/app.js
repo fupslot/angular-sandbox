@@ -7,6 +7,9 @@ angular.module('MyApp', [])
         templateUrl: 'views/main.html',
         controller: 'MainCtrl'
       })
+      .when('/404', {
+        templateUrl: '404.html'
+      })
       .otherwise({
         redirectTo: '/'
       });

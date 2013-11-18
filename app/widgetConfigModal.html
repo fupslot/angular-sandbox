@@ -1,0 +1,81 @@
+<div class="widget-config">
+    <div class="modal-header">
+        <h4>
+            <span class="widget-config-title"></span>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <span style="color:grey;font-size:15px;float: right;">
+                <i title={{widget.type.name}}/v{{widgetScope.getVersion()}} class="icon-info-sign"></i>
+            </span>
+        </h4>
+    </div>
+    
+    <div class="modal-body {{widget.type.name}}-widget-config">
+        <div class="tabbable" ng-model="currentTab">
+            <% if (isWidgetConfigModalManaged) { %>
+            <!-- DATASOURCE -->
+            <div class="tab-pane" name="Data Source">
+                <div class="alert pull-left" ng-show="isEmpty(datasourceList)">
+                    You don\'t have any data sources configured in your document.
+                    Please close this popup and go to the menu <strong>Data > Data sources</strong>
+                    before you can select a datasource for this widget.
+                </div>
+                <div class="alert alert-info" ng-show="!hasDS() && objLength(datasourceList) > 1">
+                    Please select a data source below.
+                </div>
+                <div class="tabbable" ng-model="tmp.base.current_ds" vertical="true">
+                    <div ng-repeat="ds in datasourceList" class="tab-pane" value="{{ ds.id }}" name="{{ ds.name }}">
+                        <div class="control-group">
+                            <label class="">{{ ds.dstype_dname }}</label>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" for="name">Name</label>
+                            <div class="controls">{{ds.name}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- QUERY -->
+            <div class="tab-pane query-builder" name="Query">
+                <div ng-switch="doc.datasources[tmp.base.current_ds].dstype">
+                    {{TEMPLATE}}
+                    <div class="widget-query-builder-template" ng-switch-default>
+                        <div class="alert alert-info">
+                            <strong>No Query Builder Available For This Data Source</strong>
+                        </div>
+                    </div>
+                </div>
+                <!-- USER PERMISSION FOR QUERY CONFIGURATION -->
+                <div class="user-permissions" ng-show="supportedDatasource()">
+                    <div class="btn btn-large disabled">
+                        <i class="icon-user"></i>
+                    </div>
+                    <label>
+                        <input type="radio" ng-model="tmp.props.viewerPerm.query" ng-value="true" name="permission" />
+                        <span>All users can make changes to this query.</span>
+                    </label>
+                    <label>
+                        <input type="radio" ng-model="tmp.props.viewerPerm.query" ng-value="false" name="permission"/>
+                        <span>Only editors can make changes to this query.</span>
+                    </label>
+                </div>
+            </div>
+            <% } %>
+            
+            <!-- REST CONFIGURATION -->
+            {{ USER_CONFIGURATION }}
+
+        </div>
+    </div>
+    
+    <div class="modal-footer">
+        <div class="alert alert-error pull-left" ng-show="isValidQuery().disabled && currentTab != \'Query\'">
+            Please configure your query by going to <a href="" ng-click="currentTab=\'Query\'">Query tab</a>.
+        </div>
+        <div class="alert alert-error pull-left" ng-show="isValidQuery().disabled && currentTab == \'Query\'">
+            Please configure your query above properly.
+        </div>
+        <button class="btn" ng-click="cancel()">Cancel</button>
+        <button class="btn" ng-click="save()" ng-class="isValidQuery()">Save Changes</button>
+    </div>
+</div>

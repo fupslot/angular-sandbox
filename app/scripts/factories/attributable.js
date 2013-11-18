@@ -1,26 +1,5 @@
 angular.module('MyApp')
-.factory('Attributable', function () {
-    function __ (obj, properties, value) {
-        var property = properties.shift();
-
-        if (typeof property === 'undefined') { 
-            return obj;
-        }
-        
-        if (typeof obj[property] === 'undefined') {
-            if (properties.length > 0) {
-                obj[property] = {};
-            }
-            else {
-                obj[property] = value;
-                return obj;
-            }
-        }
-
-        __(obj[property], properties, value);    
-        return obj;
-    };
-    
+.factory('Attributable', ['Helper', function (Helper) {
     return {
 
         set: function (key, value, silent) {
@@ -45,7 +24,7 @@ angular.module('MyApp')
                     // debugger
                     if (angular.isUndefined(this.attributes[root])) { return; }
 
-                    var obj = __({}, _.pull(attr.split('.'), root), attrs[attr]);
+                    var obj = Helper.__({}, _.pull(attr.split('.'), root), attrs[attr]);
                     this.attributes[root] = _.defaults(obj, this.attributes[root]);
                     changes.push(attr);
                     
@@ -79,4 +58,4 @@ angular.module('MyApp')
             return _.escape(this.get(attr));
         }
    };
-});
+}]);

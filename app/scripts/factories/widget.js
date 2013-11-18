@@ -26,8 +26,8 @@ angular.module('MyApp')
     };
 
     this.$get = 
-            ['$log', 'Events', 'Extend', 'WidgetSDK', 'Attributable',
-    function ($log,   Events,   Extend,   WidgetSDK,   Attributable) {
+            ['$log', 'Events', 'Extend', 'WidgetSDK', 'Attributable', 'Helper',
+    function ($log,   Events,   Extend,   WidgetSDK,   Attributable,   Helper) {
 
         var _SetWatchFunc = function () {
             var _scope = this.__privates__.scope, self = this;
@@ -106,7 +106,16 @@ angular.module('MyApp')
                             if (angular.isUndefined(withValue)) { withValue = previous; }
 
                             watchers[attr].unwatch();
-                            scope.attrs[attr] = withValue;
+
+                            if (attr.indexOf('.') !== -1) {
+                                var root = _.first(attr.split('.'));
+                                var obj = Helper.__({}, _.pull(attr.split('.'), root), withValue);
+                                scope.attrs[root] = obj;
+                            }
+                            else {
+                                scope.attrs[attr] = withValue;
+                            }
+
                             watchers[attr].unwatch = scope.$watch('attrs.' + attr, watcher);
                             console.log('canceled');
                         };

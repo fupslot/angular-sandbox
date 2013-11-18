@@ -1,6 +1,28 @@
 angular.module('MyApp')
 .factory('Attributable', function () {
-   return {
+    function __ (obj, properties, value) {
+        var property = properties.shift();
+
+        if (typeof property === 'undefined') { 
+            return obj;
+        }
+        
+        if (typeof obj[property] === 'undefined') {
+            if (properties.length > 0) {
+                obj[property] = {};
+            }
+            else {
+                obj[property] = value;
+                return obj;
+            }
+        }
+
+        __(obj[property], properties, value);    
+        return obj;
+    };
+    
+    return {
+
         set: function (key, value, silent) {
             var attrs, changes;
 
@@ -15,7 +37,20 @@ angular.module('MyApp')
             }
 
             for (attr in attrs) {
-                if (!_.isEqual(this.attributes[attr], attrs[attr])) {
+                // in case of setting value by object path  Ex: person.name = 'John'
+                // only if attributes have person object already
+                // !!! not tested code
+                if (attr.indexOf('.') !== -1) {
+                    var root = _.first(attr.split('.'));
+                    // debugger
+                    if (angular.isUndefined(this.attributes[root])) { return; }
+
+                    var obj = __({}, _.pull(attr.split('.'), root), attrs[attr]);
+                    this.attributes[root] = _.defaults(obj, this.attributes[root]);
+                    changes.push(attr);
+                    
+                }
+                else if (!_.isEqual(this.attributes[attr], attrs[attr])) {
                     this.attributes[attr] = attrs[attr];
                     changes.push(attr);
                 }
@@ -24,7 +59,7 @@ angular.module('MyApp')
             // Trigger all relevant attribute changes.
             if (!silent) {
                 for (var i = 0, l = changes.length; i < l; i++) {
-                    this.trigger('change:'+changes[i], this, this.get(changes[i]));
+                    this.trigger('change:'+changes[i], this, attrs[changes[i]]);
                 }
             }
         },

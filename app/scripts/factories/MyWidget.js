@@ -17,7 +17,7 @@ angular.module('MyApp')
     };
     
     var MyWidget = Widget.extend({
-        tabs: ['viz', 'calc'],
+        tabs: ['viz'],
 
         defaults: {
             title: 'MyWidget',
@@ -25,17 +25,24 @@ angular.module('MyApp')
             age: '37',
 
             viz: {
-                chart: 'pie'
-            },
-            
-            calc: {}
+                chart: 'pie',
+            }
         },
 
         initialize: function () {
             this.bind('title');
             this.validate('title', onTitleValidate);
 
+            this.bind('viz.chart');
+            this.validate('viz.chart', function (value, previous, cancel) {
+                if (value.length < 3) { return cancel();}
+                console.log(value);
+            });
+            // this.on('change:viz.chart', function (sender, value) {
+            //     console.log(value);
+            // });
 
+            this.set('viz.chart', 'notpie');
         },
 
         foo: function () {

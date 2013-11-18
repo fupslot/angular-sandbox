@@ -5,7 +5,7 @@ angular.module('MyApp')
 function ($rootScope,   $log,   $injector) {
     var widgetInstances = [];
 
-    var createInstance = function (widgetClassName, attrs, opts, model) {
+    var createInstance = function (widgetClassName, opts, model) {
         var instance = null;
 
         // instance name must be set
@@ -18,7 +18,7 @@ function ($rootScope,   $log,   $injector) {
         // ===================================
         
         var widgetClass = $injector.get(widgetClassName);
-        instance = new widgetClass(widgetClassName, attrs, opts, model);
+        instance = new widgetClass(widgetClassName, opts, model);
         // ===================================
 
         widgetInstances.push(instance);

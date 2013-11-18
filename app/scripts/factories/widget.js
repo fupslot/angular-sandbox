@@ -116,7 +116,7 @@ angular.module('MyApp')
                     }
 
                 };
-
+// debugger
                 watchers[attr] = {
                     name: attr,
                     unwatch: scope.$watch('attrs.' + attr, watcher)
@@ -177,24 +177,33 @@ angular.module('MyApp')
             };
         };
 
-        var Widget = function(className, attributes, options, model) {
+        var Widget = function(className, options, model) {
+            var self = this;
+
             this.className = className;
+            this.attributes = {};
 
             var options = this.options = angular.extend({}, defaults, globalOptions, options);
             
             this.__model__ = _.defaults({}, defaultModel, model);
             var model = this.__model__;
 
+            // pulls uniq tabs which may be defined by a developer
+            var _tabs = _.pull(_.uniq(_.result(this, 'tabs') || []), 'query');
+            var _defaults = _.result(this, 'defaults');
 
-            var tabConfigs = 
-            var tabs = _.result(this, 'tabs');
-            var _defaults = _.result(this, 'defaults')
-            angular.forEach(obj, iterator) ;
-            // var tabs = _.uniq(['query'], _.result(this, 'tabs'));
+            // merges default configuration defined by developer and configuration
+            // from __model__.config object per each tab
+            angular.forEach(_tabs, function (tab) {
+                model.config[tab] = _.defaults({}, model.config[tab], _.result(_defaults, tab));
+                angular.copy(model.config[tab], (self.attributes[tab] = {}));
+                delete _defaults[tab];
+            });
+            
+            // attach tabs to a model, we'll need them in save
+            this.__tabs__ = _tabs;
 
-            var attrs = attributes || {};
-            this.attributes = {};
-            attrs = _.defaults({}, attrs, _.result(this, 'defaults'));
+            var attrs = _.defaults({}, _defaults);
 
             this.set(attrs);
 
@@ -213,9 +222,8 @@ angular.module('MyApp')
             _SetValidateFunc.call(this);
             _SetMergeFunc.call(this);
 
-            // 
-            scope.attrs = {};
-            angular.copy(attrs, scope.attrs);
+            // attach attributes to the scope
+            angular.copy(this.attributes, (scope.attrs = {}));
 
             this.initialize.apply(this, arguments);
         };
@@ -224,11 +232,6 @@ angular.module('MyApp')
             // Initialize is an empty function by default. Override it with your own
             // initialization logic.
             initialize: angular.noop,
-
-            watch: function() {
-                return this.option
-            },
-
             disabled: false,
 
             disable: function () {
@@ -246,7 +249,7 @@ angular.module('MyApp')
             },
 
             save: function () {
-                this._mergeAttributes();
+                // this._mergeAttributes();
                 this.trigger('onSave', this.attributes);
                 this.trigger('draw');
             }

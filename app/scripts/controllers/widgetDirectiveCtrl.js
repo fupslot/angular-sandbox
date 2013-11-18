@@ -10,7 +10,7 @@ function ($scope,   $log,   $element,   $compile,   $http,   WidgetFactory) {
 
         try {
             var options  = $scope.options || {scope: $scope, el: $element};
-            widgetInstance = $scope.widgetInstance = $scope[instanceName] = WidgetFactory.createInstance(instanceName, {}, options, {wiid: 333});
+            widgetInstance = $scope.widgetInstance = $scope[instanceName] = WidgetFactory.createInstance(instanceName, options, {wiid: 333});
             widgetInstance.on('onWidgetDisable', onWidgetDisabled);
             widgetInstance.on('onWidgetEnable', onWidgetEnabled);
         } catch(e) {

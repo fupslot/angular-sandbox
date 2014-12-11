@@ -1,0 +1,10 @@
+<div ng-controller="TouchCtrl" ng-init="showContent=true">
+    <div class="btn btn-default" ng-click="alertify()">Click me</div>
+    <div class="btn btn-default" ng-click="alertify()">Click me</div>
+    <div class="well" ng-show="showContent">
+        Some content
+    </div>
+    <div class="well" ng-swipe-left="showContent=false" ng-swipe-right="showContent=true">
+        swipe on me
+    </div>
+</div>

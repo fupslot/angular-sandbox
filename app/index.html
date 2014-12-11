@@ -25,7 +25,13 @@
       <script src="bower_components/es5-shim/es5-shim.js"></script>
       <script src="bower_components/json3/lib/json3.min.js"></script>
     <![endif]-->
-
+    <ul class="breadcrumb">
+        <li><a href="/">main</a><spa class="divider">|</spa></li>
+        <li><a href="#/http">http</a><span class="divider">|</span></li>
+        <li><a href="#/touch">touch</a><span class="divider">|</span></li>
+        <li><a href="#/directive">directive</a><span class="divider">|</span></li>
+        <li><a href="#/validation">validation</a></li>
+    </ul>
     <!-- Add your site or application content here -->
     <div class="container" ng-view=""></div>
 
@@ -61,6 +67,7 @@
         <script src="bower_components/angular-resource/angular-resource.js"></script>
         <script src="bower_components/angular-cookies/angular-cookies.js"></script>
         <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+        <script src="bower_components/angular-touch/angular-touch.js"></script>
         <!-- endbuild -->
 
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
@@ -77,9 +84,14 @@
         <script src="scripts/controllers/widgetDirectiveCtrl.js"></script>
         <script src="scripts/directives/widgetDirective.js"></script>
         <script src="scripts/directives/counter.js"></script>
+        <script src="scripts/directives/list.js"></script>
         <script src="scripts/controllers/myDirective.js"></script>
         <script src="scripts/controllers/myButton.js"></script>
         <script src="scripts/controllers/main.js"></script>
+        <script src="scripts/controllers/http.js"></script>
+        <script src="scripts/controllers/touch.js"></script>
+        <script src="scripts/controllers/directive.ctrl.js"></script>
+        <script src="scripts/controllers/validation.ctrl.js"></script>
         <!-- endbuild -->
 </body>
 </html>

@@ -20,3 +20,26 @@ body {
     line-height: 1;
     letter-spacing: -1px;
 }
+
+.panel {
+    box-sizing: border-box;
+    padding: 4px;
+    min-height: 30px;
+}
+
+.group {
+    padding: 4px;
+    box-sizing: border-box;
+    min-height: 30px;
+}
+
+.group.group-columns {
+
+    display: flex;
+    flex-direction: row;
+}
+
+.group.group-columns .panel {
+    order: 1;
+    flex-grow: 1;
+}
